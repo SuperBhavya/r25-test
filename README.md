@@ -44,15 +44,33 @@ If you are able to compile your code successfully you should see something like 
 
 # Solution
 ## Understanding
-Describe what you understood about the problem.
+I am tasked with writing code to control a Sabertooth 2x60 motor driver in simplified serial mode using an RC channel value from the SBUS receiver. The challenge is to properly interpolate this channel value into a format that the Sabertooth motor driver can accept to control the rover's direction and speed. Specifically, i need to:
+
+Interpolate the RC channel's value into the appropriate PWM range.
+Ensure the motor moves forward and backward depending on the input.
 
 ## Thought Process
-After understanding the problem, describe how you decided to proceed towards solving the question.
+Input Range: The RC transmitter sends channel values, usually in a range like 0-2047 (for 11-bit SBUS data). This range needs to be converted into values that the Sabertooth understands.
+
+Sabertooth Command: The motor driver in simplified serial mode expects commands in the range of 1 to 127 for forward and 128 to 255 for reverse.
+
+Command 0 stops the motor.
+Values closer to 1 mean slow forward movement, and values closer to 127 mean fast forward.
+Values closer to 128 mean slow backward movement, and values closer to 255 mean fast backward.
+This calls for an interpolation where the SBUS value maps to Sabertooth commands for both forward and reverse motion.
 
 ## Implementation
-How did you decide to implement your solution.
+Interpolation Formula:
 
-Mention the details, such as the scaling used in the interpolation and how you tested it.
+Map the RC channel value to the Sabertooth command range.
+If the channel value is above the mid-point (1023 for an 11-bit value), map it to the 1-127 range.
+If below the mid-point, map it to the 128-255 range.
+Scaling:
+
+For forward: Use a linear mapping from the RC channel range (1024-2047) to the Sabertooth range (1-127).
+For reverse: Use a linear mapping from the RC channel range (0-1023) to the Sabertooth range (128-255).
+
+
 
 # Google Form
 [Link to Repo Submission](https://docs.google.com/forms/d/e/1FAIpQLSeKVbm2dqWxwA5lbEkRfzY8KF619mI5ibGs0Cm2e5wrb0hoWQ/viewform)
