@@ -1,0 +1,10 @@
+# depslib dependency file v1.0
+1725629434 source:c:\users\hi2ga\r25-test\src\main.c
+	<stdint.h>
+	<stdio.h>
+	<stdlib.h>
+	"parsing.h"
+
+1725629608 c:\users\hi2ga\r25-test\include\parsing.h
+	<stdint.h>
+
